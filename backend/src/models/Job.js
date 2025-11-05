@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import JOB_STATUS from '../enums/jobStatus.js';
+import { unixTimestampPlugin } from '../plugins/unixTimestampPlugin.js';
 
 const JobSchema = new mongoose.Schema({
   companyName: {
@@ -10,10 +11,7 @@ const JobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  appliedDate: {
-    type: Date,
-    required: true
-  },
+  appliedDate: Date,
   package: String,
   rounds: Number,
   currentRound: {
@@ -32,5 +30,7 @@ const JobSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+JobSchema.plugin(unixTimestampPlugin);
 
 export default mongoose.model('Job', JobSchema);

@@ -6,7 +6,7 @@ import {
   updateJob,
 } from '../controllers/jobController.js';
 
-export default async function jobRoutes(fastify, options) {
+export default async function jobRoute(fastify, options) {
   fastify.get('/', options, getAllJobs);
   fastify.get('/:id', options, getJobById);
   fastify.post('/', options, createJob);

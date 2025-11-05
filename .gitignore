@@ -1,2 +1,6 @@
+# IDE Settings
 .vscode/
 .zed/
+
+# API Client
+bruno/

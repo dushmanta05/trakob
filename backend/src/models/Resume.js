@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { unixTimestampPlugin } from '../plugins/unixTimestampPlugin.js';
 
 const ResumeSchema = new mongoose.Schema({
   name: {
@@ -23,5 +24,7 @@ const ResumeSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+ResumeSchema.plugin(unixTimestampPlugin);
 
 export default mongoose.model('Resume', ResumeSchema);
