@@ -1,41 +1,47 @@
 /**
- * Mongoose plugin to convert timestamps to Unix format (milliseconds)
- * This plugin can be applied to any Mongoose schema to ensure dates are stored as Unix timestamps
+ * Mongoose plugin to automatically convert all Date fields to Unix timestamps
+ * Usage: schema.plugin(unixTimestampPlugin);
  */
 
 export function unixTimestampPlugin(schema) {
-  schema.pre('save', function() {
-    if (this.createdAt) {
-      this._doc.createdAt = this.createdAt.getTime();
-    }
-    if (this.updatedAt) {
-      this._doc.updatedAt = this.updatedAt.getTime();
-    }
+  schema.eachPath((pathname, schematype) => {
+    if (schematype.instance === 'Date') {
+      const options = { ...schema.path(pathname).options };
 
-    const schemaObj = schema.obj;
-    for (const fieldName in schemaObj) {
-      const fieldDef = schemaObj[fieldName];
-      if (fieldDef.type === Date || fieldDef === Date) {
-        if (this[fieldName] instanceof Date) {
-          this[fieldName] = this[fieldName].getTime();
+      schema.remove(pathname);
+      schema.add({
+        [pathname]: {
+          ...options,
+          type: Number,
+          set: (v) => {
+            if (!v) return v;
+            if (v instanceof Date) return v.getTime();
+            if (typeof v === 'string') return new Date(v).getTime();
+            return v;
+          }
         }
-      } else if (Array.isArray(fieldDef) && fieldDef.length > 0 && (fieldDef[0].type === Date || fieldDef[0] === Date)) {
-        if (Array.isArray(this[fieldName])) {
-          this[fieldName] = this[fieldName].map(date => date instanceof Date ? date.getTime() : date);
-        }
-      }
+      });
     }
   });
 
-  schema.pre('findOneAndUpdate', function() {
-    this.set({ updatedAt: Date.now() });
-  });
+  if (schema.options.timestamps) {
+    schema.remove('createdAt');
+    schema.remove('updatedAt');
 
-  schema.pre('updateOne', function() {
-    this.set({ updatedAt: Date.now() });
-  });
+    schema.add({
+      createdAt: { type: Number, default: Date.now },
+      updatedAt: { type: Number, default: Date.now }
+    });
 
-  schema.pre('updateMany', function() {
-    this.set({ updatedAt: Date.now() });
-  });
+    schema.pre('save', function(next) {
+      this.updatedAt = Date.now();
+      if (this.isNew) this.createdAt = Date.now();
+      next();
+    });
+
+    schema.pre(['findOneAndUpdate', 'updateOne', 'updateMany'], function(next) {
+      this.set({ updatedAt: Date.now() });
+      next();
+    });
+  }
 }

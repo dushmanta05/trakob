@@ -11,7 +11,10 @@ const JobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  appliedDate: Date,
+  appliedDate: {
+    type: Date,
+    required: true
+  },
   package: String,
   rounds: Number,
   currentRound: {
