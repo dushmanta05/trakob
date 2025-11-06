@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import corsPlugin from './src/plugins/cors.js';
 import mongoPlugin from './src/plugins/mongo.js';
 import jobRoute from './src/routes/job.js';
 import resumeRoute from './src/routes/resume.js';
@@ -7,6 +8,7 @@ const fastify = Fastify({
   logger: true
 });
 
+await fastify.register(corsPlugin);
 await fastify.register(mongoPlugin);
 
 fastify.register(jobRoute, { prefix: '/api/job' });
