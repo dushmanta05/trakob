@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-gray-50">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 h-screen fixed top-0 left-0 overflow-y-auto z-10">
+      <nav class="p-6">
+        <h2 class="text-2xl font-bold mb-8 text-center text-indigo-600">Trakob</h2>
+        <ul class="space-y-2">
+          <li>
+            <a href="/" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+              <span class="text-xl mr-3">🏠</span>
+              <span class="flex-1">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="/job" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+              <span class="text-xl mr-3">💼</span>
+              <span class="flex-1">Jobs</span>
+            </a>
+          </li>
+          <li>
+            <a href="/resume" class="flex items-center p-3 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors">
+              <span class="text-xl mr-3">📄</span>
+              <span class="flex-1">Resumes</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64 p-6">
+      <header class="mb-6">
+        <h1 class="text-3xl font-semibold text-gray-900">{title}</h1>
+      </header>
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <slot />
+      </div>
+    </main>
+  </div>
+</body>
+</html>

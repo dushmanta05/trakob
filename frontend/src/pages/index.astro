@@ -1,16 +1,23 @@
 ---
-
+import Layout from "../layouts/MainLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Trakob</title>
-	</head>
-	<body>
-		<h1>Trakob</h1>
-	</body>
-</html>
+ <Layout title="Home">
+  <h2 class="text-xl font-semibold mb-4">Welcome to Trakob</h2>
+  <p class="text-gray-600 mb-8">Your personal job tracking dashboard.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-lg border border-gray-200 text-center shadow-sm">
+      <h3 class="text-sm text-gray-500 mb-2">Total Jobs</h3>
+      <p class="text-2xl font-bold text-gray-900">0</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg border border-gray-200 text-center shadow-sm">
+      <h3 class="text-sm text-gray-500 mb-2">Applied This Week</h3>
+      <p class="text-2xl font-bold text-gray-900">0</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg border border-gray-200 text-center shadow-sm">
+      <h3 class="text-sm text-gray-500 mb-2">Pending Follow-ups</h3>
+      <p class="text-2xl font-bold text-gray-900">0</p>
+    </div>
+  </div>
+</Layout>

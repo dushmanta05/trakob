@@ -17,7 +17,7 @@ fastify.get('/', async (_, reply) => {
 });
 
 const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 
 fastify.listen({ port: PORT, host: HOST })
   .then(() => fastify.log.info(`Server running on port ${PORT}`))
